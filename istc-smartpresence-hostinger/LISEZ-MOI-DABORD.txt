@@ -1,0 +1,81 @@
+ISTC SmartPresence — paquet de déploiement Hostinger
+=====================================================
+
+Ce ZIP contient quatre choses, et chacune va à un endroit différent.
+Le guide complet est dans DEPLOIEMENT-HOSTINGER.md (10 étapes).
+
+
+1. public_html/
+   ------------
+   À DÉPOSER SUR HOSTINGER, dans votre dossier public_html.
+
+   Déposez le CONTENU de ce dossier, pas le dossier lui-même :
+   index.html doit se retrouver directement dans public_html/,
+   pas dans public_html/public_html/.
+
+   Le ZIP respecte déjà l'arborescence finale, y compris le
+   fichier .htaccess de la racine et le dossier api/.
+
+   ATTENTION : les fichiers commençant par un point (.htaccess)
+   sont parfois cachés par les gestionnaires de fichiers. Vérifiez
+   qu'ils sont bien montés : sans eux, l'application affiche une
+   page blanche dès qu'on rafraîchit une page interne.
+
+
+2. a-importer-dans-phpmyadmin/schema.sql
+   -------------------------------------
+   À IMPORTER UNE SEULE FOIS, via phpMyAdmin (étape 2 du guide).
+
+   Ne le déposez PAS dans public_html : il décrit la structure de
+   votre base, ce n'est pas une information à rendre publique.
+
+   Ne le réimportez jamais après la mise en service : il effacerait
+   toutes vos données.
+
+
+3. a-garder-sur-votre-ordinateur/creer-administrateur.php
+   ------------------------------------------------------
+   À EXÉCUTER SUR VOTRE ORDINATEUR, pas en ligne (étape 9).
+
+       php creer-administrateur.php
+
+   Le script vous pose quelques questions, puis affiche un bloc SQL
+   à coller dans phpMyAdmin. Votre mot de passe ne quitte jamais
+   votre machine : seule son empreinte Argon2id part en base.
+
+   Ce fichier ne doit jamais être déposé sur le serveur.
+
+
+4. etudiants-a-importer-dans-lapp.csv
+   ----------------------------------
+   Vos 22 étudiants. À charger depuis l'application une fois
+   connecté : Référentiel > Étudiants > Import (étape 10).
+
+
+IL MANQUE VOLONTAIREMENT UN FICHIER
+====================================
+
+api/config.php n'est pas dans le ZIP : il contiendrait le mot de
+passe de votre base. Vous le créez vous-même à l'étape 4, en
+copiant api/config.exemple.php et en remplissant vos identifiants
+Hostinger.
+
+Sans ce fichier, l'API répond « configuration » — c'est normal
+tant que vous ne l'avez pas créé.
+
+
+À SAVOIR AVANT DE COMMENCER
+============================
+
+L'API PHP n'a pas pu être testée de bout en bout : la base de
+données de la machine de développement s'arrête de façon répétée.
+Attendez-vous à une ou deux erreurs au premier essai.
+
+Commencez par l'étape 8 du guide dès que les fichiers sont en
+place : ouvrez https://votre-domaine/api/sante dans le navigateur.
+Tant que vous ne voyez pas "ok":true, ne cherchez pas plus loin,
+le problème est là.
+
+En cas d'erreur, le fichier logs-app/api.log contient le message
+détaillé — le navigateur, lui, ne montre jamais les détails, c'est
+volontaire.

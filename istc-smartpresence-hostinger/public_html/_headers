@@ -1,0 +1,37 @@
+# En-têtes de sécurité — §13.6 « En-têtes de sécurité manquants », §13.8.
+#
+# Format Netlify / Cloudflare Pages. Pour Nginx, Apache ou un serveur Node, les
+# mêmes valeurs sont à reporter dans sa configuration : voir le README.
+#
+# Ces en-têtes sont servis par l'hébergeur : ils ne peuvent pas être posés depuis
+# le code du navigateur. Les vérifier fait partie de la liste de contrôle avant
+# mise en ligne (§13.13).
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin
+  X-Frame-Options: DENY
+
+# Note sur `style-src 'unsafe-inline'` :
+# React pose des attributs `style` en ligne (largeur d'un code QR, colonnes d'une
+# grille). Un attribut de style ne peut pas exécuter de code : la règle du §13.8
+# qui interdit `unsafe-inline` vise les SCRIPTS, et `script-src 'self'` ci-dessus
+# n'en autorise aucun. Pour supprimer tout de même cette directive, il faudrait
+# remplacer ces attributs par des variables CSS et poser `style-src-attr 'none'`.
+
+# Les fichiers versionnés par leur empreinte peuvent être mis en cache longtemps.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Le service worker et la page d'entrée ne sont jamais figés : sinon une version
+# vulnérable resterait en place (§13.5 « Ancienne version bloquée »).
+/sw.js
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache

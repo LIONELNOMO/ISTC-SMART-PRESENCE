@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------
+#  Protection du dossier API
+#
+#  §13.3 « Routes oubliées »      — tout passe par index.php ; aucun autre
+#                                   fichier n'est accessible par le web.
+#  §13.11 « Secrets dans le dépôt » — config.php n'est jamais servi.
+# ---------------------------------------------------------------------
+
+# Toute requête qui ne vise pas un fichier existant arrive sur index.php.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# La configuration, les bibliothèques, les outils et le schéma ne sont jamais
+# servis — même si mod_rewrite venait à manquer.
+<FilesMatch "^(config|config\.exemple)\.php$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(sql|log|md|ini)$">
+    Require all denied
+</FilesMatch>
+
+# Apache 2.2, au cas où l'hébergeur est ancien.
+<IfModule !mod_authz_core.c>
+    <FilesMatch "^(config|config\.exemple)\.php$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <FilesMatch "\.(sql|log|md|ini)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+# Pas d'index de dossier.
+Options -Indexes
+
+# En-têtes de sécurité (§13.6). Ceux de l'application sont dans public/_headers.
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always unset X-Powered-By
+</IfModule>

@@ -1,0 +1,81 @@
+# ISTC SmartPresence — règles du dossier web.
+
+# -------------------------------------------------------------------
+#  Adresses de l'application
+#
+#  React gère ses propres adresses côté navigateur. Une URL inconnue
+#  doit donc retomber sur index.html — sauf /api/, qui va au PHP.
+# -------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # L'API garde la main sur ses propres routes.
+    RewriteRule ^api/ - [L]
+
+    # Un fichier ou un dossier qui existe est servi tel quel.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Tout le reste : l'application.
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# -------------------------------------------------------------------
+#  En-têtes de sécurité (§13.6)
+# -------------------------------------------------------------------
+<IfModule mod_headers.c>
+    # Le navigateur respecte le type déclaré et n'essaie pas de deviner.
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Aucune adresse interne ne fuit vers un site tiers.
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # L'application ne doit jamais être enfermée dans un cadre
+    # (§13.6 « Clickjacking »).
+    Header always set X-Frame-Options "DENY"
+
+    # HTTPS obligatoire pendant un an. À n'activer qu'une fois le
+    # certificat en place — sinon le site devient inaccessible.
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+    # La caméra sert au scan des codes QR ; le reste est refusé.
+    Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+
+    # Inutile d'annoncer la version de PHP à un attaquant.
+    Header always unset X-Powered-By
+    Header always unset Server
+</IfModule>
+
+# -------------------------------------------------------------------
+#  Le service worker ne doit jamais être servi depuis un cache
+#  périmé, sinon une mise à jour peut ne jamais arriver.
+# -------------------------------------------------------------------
+<FilesMatch "^(sw\.js|registerSW\.js|manifest\.webmanifest)$">
+    <IfModule mod_headers.c>
+        Header set Cache-Control "no-cache, must-revalidate"
+    </IfModule>
+</FilesMatch>
+
+# Les fichiers d'empreinte unique peuvent être gardés longtemps.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 6 months"
+    ExpiresByType image/png "access plus 6 months"
+    ExpiresByType image/svg+xml "access plus 6 months"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Aucune liste de fichiers ne s'affiche pour un dossier sans index.
+Options -Indexes
+
+# Rien de ce qui suit n'a à être téléchargeable.
+<FilesMatch "\.(sql|log|md|json\.map|map)$">
+    Require all denied
+</FilesMatch>

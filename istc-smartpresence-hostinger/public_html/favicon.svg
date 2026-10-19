@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="182 90 356 356">
+  <title>ISTC SmartPresence</title>
+  <rect x="182" y="90" width="356" height="356" rx="72" fill="#FFFFFF"/>
+  <g>
+    <path d="M186 252 Q276 252 336 316 Q266 280 204 278 Z" fill="#17A34A"/>
+    <path d="M494 252 Q404 252 344 316 Q414 280 476 278 Z" fill="#17A34A"/>
+    <path d="M204 286 Q276 288 340 326 Q404 288 476 286 Q420 330 340 352 Q260 330 204 286 Z" fill="#0B2E6F"/>
+    <circle cx="274" cy="204" r="21" fill="#43B02A"/>
+    <path d="M240 262 Q242 230 274 230 Q296 230 300 244 L300 282 Z" fill="#43B02A"/>
+    <circle cx="406" cy="204" r="21" fill="#FF9A1F"/>
+    <path d="M440 262 Q438 230 406 230 Q384 230 380 244 L380 282 Z" fill="#FF9A1F"/>
+    <circle cx="340" cy="186" r="28" fill="#0A7BEA"/>
+    <path d="M294 270 Q294 222 340 222 Q386 222 386 270 L340 312 Z" fill="#0A7BEA"/>
+    <circle cx="492" cy="330" r="42" fill="#2FAE4A" stroke="#FFFFFF" stroke-width="9"/>
+    <path d="M471 330 L487 346 L514 314" fill="none" stroke="#FFFFFF" stroke-width="11"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+{
+  "name": "istc-smartpresence",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ISTC SmartPresence - suivi des presences des enseignants et des etudiants, PWA hors ligne",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "test": "node --test tests/regles.test.mjs",
+    "audit": "npm audit --omit=dev",
+    "verif": "node scripts/verif-securite.mjs",
+    "controle-complet": "npm run verif && npm test && npm run build && npm audit --omit=dev",
+    "icones": "node scripts/generer-icones.mjs public"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "dexie": "^4.0.11",
+    "dexie-react-hooks": "^1.1.7",
+    "jsqr": "^1.4.0",
+    "lucide-react": "^0.469.0",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.4",
+    "tailwind-merge": "^2.5.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "fake-indexeddb": "^6.2.5",
+    "tailwindcss": "^4.0.0",
+    "vite": "^6.0.7",
+    "vite-plugin-pwa": "^0.21.1"
+  }
+}

@@ -1,0 +1,923 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ *
+ *  Thème piloté par la classe `.dark` sur <html> (pas par l'OS seul)
+ * ------------------------------------------------------------------ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ *
+ *  Jetons de couleur — clair
+ * ------------------------------------------------------------------ */
+/**
+ * Direction « institutionnel sobre », palette reprise de la maquette fournie.
+ *
+ * Tout est construit sur une base chaude, teinte 60–70 en oklch :
+ *   - le fond est un crème très clair, jamais un blanc froid ;
+ *   - le texte est un brun très foncé, presque noir, mais jamais gris neutre ;
+ *   - la couleur d'action est ce même brun foncé — c'est lui qui remplit les
+ *     boutons principaux, ce qui donne le côté institutionnel ;
+ *   - l'orange cuivré est l'accent : chiffres clés, pastilles, liens. Il ne
+ *     remplit jamais un bouton, sinon il appellerait l'œil partout.
+ *
+ * Les cartes sont blanches sur ce crème : c'est ce contraste, plus des bordures
+ * de 1 px, qui structure la page. Les ombres restent minimales.
+ */
+:root {
+  --c-canvas: oklch(97.2% 0.012 75);
+  --c-surface: oklch(100% 0 0);
+  --c-surface-2: oklch(98.2% 0.01 72);
+  --c-surface-3: oklch(95% 0.016 72);
+  --c-line: oklch(91% 0.016 70);
+  --c-line-strong: oklch(84% 0.022 68);
+
+  --c-text: oklch(24% 0.028 55);
+  --c-text-soft: oklch(45% 0.03 58);
+  --c-text-faint: oklch(60% 0.028 62);
+  --c-text-invert: oklch(99% 0.004 75);
+  --c-on-brand: oklch(98.5% 0.008 75);
+
+  /* Brun foncé de la maquette : couleur d'action, boutons principaux */
+  --c-brand: oklch(26% 0.035 55);
+  --c-brand-soft: oklch(94.5% 0.025 70);
+  --c-brand-ring: oklch(40% 0.05 55);
+  --c-brand-text: oklch(30% 0.04 55);
+
+  /* Orange cuivré : accent, jamais un fond de bouton */
+  --c-accent: oklch(63% 0.145 52);
+  --c-accent-soft: oklch(95% 0.04 62);
+  --c-accent-text: oklch(52% 0.145 48);
+
+  /* États fondus : saturation volontairement basse, teintes tirées vers le
+     chaud. On les distingue quand on les cherche ; elles ne sautent pas aux
+     yeux sur un tableau de bord consulté toute la journée. */
+  --c-ok: oklch(55% 0.055 140); /* vert sauge */
+  --c-ok-soft: oklch(95.5% 0.018 140);
+  --c-warn: oklch(60% 0.075 78); /* ambre poussiéreux */
+  --c-warn-soft: oklch(96% 0.028 78);
+  --c-bad: oklch(50% 0.095 32); /* terracotta */
+  --c-bad-soft: oklch(95.5% 0.025 32);
+  --c-info: oklch(53% 0.055 240); /* ardoise bleutée */
+  --c-info-soft: oklch(95.5% 0.016 240);
+
+  --shadow-card: 0 1px 2px oklch(24% 0.028 55 / 0.045);
+  --shadow-raised: 0 1px 2px oklch(24% 0.028 55 / 0.05), 0 6px 16px -10px oklch(24% 0.028 55 / 0.18);
+  --shadow-pop: 0 16px 48px -12px oklch(24% 0.028 55 / 0.24);
+  --glow: 0 0 0 1px oklch(26% 0.035 55 / 0.14);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Jetons de couleur — sombre
+ * ------------------------------------------------------------------ */
+/**
+ * Thème sombre : même base chaude, luminosités inversées. Le brun foncé ne peut
+ * plus servir de couleur d'action sur un fond sombre — c'est l'orange cuivré,
+ * éclairci, qui prend le relais pour les boutons principaux.
+ */
+.dark {
+  --c-canvas: oklch(16% 0.012 60);
+  --c-surface: oklch(20% 0.014 62);
+  --c-surface-2: oklch(23.5% 0.016 62);
+  --c-surface-3: oklch(28% 0.018 62);
+  --c-line: oklch(28.5% 0.018 62);
+  --c-line-strong: oklch(38% 0.022 62);
+
+  --c-text: oklch(96% 0.008 72);
+  --c-text-soft: oklch(77% 0.016 68);
+  --c-text-faint: oklch(62% 0.02 65);
+  --c-text-invert: oklch(17% 0.015 58);
+  --c-on-brand: oklch(18% 0.03 55);
+
+  --c-brand: oklch(68% 0.145 55);
+  --c-brand-soft: oklch(28% 0.055 55);
+  --c-brand-ring: oklch(74% 0.14 58);
+  --c-brand-text: oklch(84% 0.1 60);
+
+  --c-accent: oklch(74% 0.14 58);
+  --c-accent-soft: oklch(29% 0.06 55);
+  --c-accent-text: oklch(84% 0.11 60);
+
+  --c-ok: oklch(74% 0.07 142);
+  --c-ok-soft: oklch(27% 0.03 142);
+  --c-warn: oklch(79% 0.085 78);
+  --c-warn-soft: oklch(28% 0.035 78);
+  --c-bad: oklch(70% 0.1 32);
+  --c-bad-soft: oklch(28% 0.04 32);
+  --c-info: oklch(73% 0.06 240);
+  --c-info-soft: oklch(27% 0.028 240);
+
+  --shadow-card: 0 1px 1px oklch(0% 0 0 / 0.26);
+  --shadow-raised: 0 1px 2px oklch(0% 0 0 / 0.3), 0 8px 22px -12px oklch(0% 0 0 / 0.6);
+  --shadow-pop: 0 20px 56px -14px oklch(0% 0 0 / 0.72);
+  --glow: 0 0 0 1px oklch(68% 0.145 55 / 0.3);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Exposition des jetons à Tailwind
+ * ------------------------------------------------------------------ */
+@theme inline {
+  --color-canvas: var(--c-canvas);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-surface-3: var(--c-surface-3);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+
+  --color-ink: var(--c-text);
+  --color-soft: var(--c-text-soft);
+  --color-faint: var(--c-text-faint);
+  --color-invert: var(--c-text-invert);
+  --color-on-brand: var(--c-on-brand);
+
+  --color-brand: var(--c-brand);
+  --color-brand-soft: var(--c-brand-soft);
+  --color-brand-ring: var(--c-brand-ring);
+  --color-brand-text: var(--c-brand-text);
+
+  --color-accent: var(--c-accent);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-accent-text: var(--c-accent-text);
+
+  --color-ok: var(--c-ok);
+  --color-ok-soft: var(--c-ok-soft);
+  --color-warn: var(--c-warn);
+  --color-warn-soft: var(--c-warn-soft);
+  --color-bad: var(--c-bad);
+  --color-bad-soft: var(--c-bad-soft);
+  --color-info: var(--c-info);
+  --color-info-soft: var(--c-info-soft);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Serif à fort contraste, pour la marque et les grands titres. */
+  --font-titre: 'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;
+
+  /* Angles plus droits que précédemment : moins « application », plus
+     « institution ». Les cartes passent de 16 px à 10 px. */
+  --radius-card: 0.625rem;
+  --radius-xl2: 0.75rem;
+
+  --shadow-card: var(--shadow-card);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-pop: var(--shadow-pop);
+  --shadow-glow: var(--glow);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Base
+ * ------------------------------------------------------------------ */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--c-canvas);
+    color: var(--c-text);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--c-brand-soft);
+    color: var(--c-brand-text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-brand-ring);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  /* Barres de défilement discrètes */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-line-strong) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--c-line-strong);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Utilitaires maison
+ * ------------------------------------------------------------------ */
+@utility safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}
+
+@utility safe-top {
+  padding-top: max(env(safe-area-inset-top), 0rem);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility grid-dots {
+  background-image: radial-gradient(var(--c-line-strong) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* Dégradé de marque utilisé sur l'écran de connexion et les en-têtes */
+/**
+ * Voile chaud des écrans sans session. Deux halos cuivrés très dilués sur le
+ * fond crème : la page reste claire, mais pas plate.
+ */
+@utility brand-wash {
+  background:
+    radial-gradient(
+      115% 85% at 0% 0%,
+      color-mix(in oklab, var(--c-accent) 14%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      95% 80% at 100% 4%,
+      color-mix(in oklab, var(--c-accent) 9%, transparent),
+      transparent 55%
+    );
+}
+
+@layer components {
+  .animate-in {
+    animation: fade-rise 0.28s var(--ease-out-soft) both;
+  }
+  .animate-pop {
+    animation: pop 0.22s var(--ease-out-soft) both;
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--c-surface-2) 25%,
+      var(--c-surface-3) 37%,
+      var(--c-surface-2) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.3s ease-in-out infinite;
+  }
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--c-ok) 50%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Responsive — règles transversales
+ *
+ *  L'interface est conçue d'abord pour le téléphone (§10), puis élargie.
+ *  Ces règles valent pour toute l'application, sans avoir à y penser écran
+ *  par écran.
+ * ------------------------------------------------------------------ */
+@layer base {
+  /* Rien ne déborde horizontalement, quelle que soit la largeur. */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  img,
+  svg,
+  video,
+  canvas,
+  table {
+    max-width: 100%;
+  }
+
+  /* Un matricule ou un identifiant long ne casse pas la mise en page. */
+  p,
+  dd,
+  td,
+  li,
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /**
+   * iOS zoome sur tout champ dont le texte fait moins de 16 px au moment du
+   * focus, et ne dézoome jamais. On impose donc 16 px sur téléphone, et on
+   * revient à l'échelle de l'interface à partir de la tablette.
+   */
+  @media (max-width: 639px) {
+    input:not([type='checkbox']):not([type='radio']),
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+
+  /* Cibles tactiles confortables sur écran tactile, sans grossir à la souris. */
+  @media (pointer: coarse) {
+    button,
+    [role='button'],
+    a[href],
+    select {
+      touch-action: manipulation;
+    }
+  }
+}
+
+/* Titres fluides : ils suivent la largeur sans palier brutal. */
+@utility titre-fluide {
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1.1rem + 1.3vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Marge latérale constante, qui tient compte de l'encoche. */
+@utility gouttiere {
+  padding-inline: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+/**
+ * Dégradés de bord sur une bande défilante horizontalement : ils indiquent
+ * qu'il reste du contenu à droite ou à gauche.
+ */
+@utility bande-defilante {
+  overflow-x: auto;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & > * {
+    scroll-snap-align: start;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Écran de lancement ISTC SmartPresence
+ *
+ *  Chaque pièce du logo porte `--n` (le nom de l'animation), `--w` (son
+ *  retard) et parfois `--d` (sa durée). La chorégraphie se lit donc dans le
+ *  composant, pas ici.
+ * ------------------------------------------------------------------ */
+
+.splash .o {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.splash .c {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.splash .a {
+  animation: var(--n) var(--d, 0.55s) cubic-bezier(0.2, 0.9, 0.3, 1.25) var(--w, 0s) both;
+}
+
+.splash-nom {
+  font-family: var(--font-titre);
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.splash-slogan {
+  font-family: var(--font-sans);
+  font-size: 17px;
+}
+
+.splash-filet-g {
+  transform-origin: 100% 50%;
+}
+
+.splash-filet-d {
+  transform-origin: 0% 50%;
+}
+
+.splash-barre {
+  animation: splash-progression 3.6s cubic-bezier(0.3, 0, 0.2, 1) both;
+}
+
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-70px);
+  }
+}
+
+@keyframes side {
+  from {
+    opacity: 0;
+    transform: translateX(46px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 44;
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes splash-progression {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Mouvement réduit : le logo est affiché d'emblée, complet et immobile.
+ * La règle générale du fichier neutralise déjà les durées ; on remet les
+ * pièces à leur état final pour qu'aucune ne reste invisible.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .splash .a {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+  }
+
+  .splash-barre {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Panneau de marque de l'écran de connexion (grand écran uniquement)
+ *
+ *  Fond sombre aux couleurs de la marque, avec des arcs concentriques qui
+ *  rappellent la portée d'un signal. Tout est dessiné en CSS : aucune image à
+ *  télécharger, donc rien à attendre sur une connexion lente (§11).
+ * ------------------------------------------------------------------ */
+/**
+ * Voile posé sur la photographie du panneau de connexion.
+ *
+ * Il doit faire trois choses à la fois : assombrir assez pour que le texte
+ * blanc passe partout, réchauffer l'image aux teintes de la marque, et laisser
+ * voir la salle de cours. D'où un dégradé semi-opaque plutôt qu'un aplat.
+ *
+ * Le dégradé du bas est le plus dense : c'est là que se trouvent les chiffres,
+ * qui doivent rester parfaitement lisibles.
+ */
+@utility panneau-marque-fond {
+  /* Bleu du motion design (animation d'ouverture) : marine profond #042C53,
+     eau #378ADD, continent #0C447C, grille claire #B5D4F4. */
+  background-image:
+    /* halo marine en bas à gauche */
+    radial-gradient(120% 95% at 4% 98%, rgba(12, 68, 124, 0.86), transparent 62%),
+    /* lumière bleue en haut à droite */
+    radial-gradient(90% 72% at 96% 2%, rgba(55, 138, 221, 0.55), transparent 58%),
+    /* arcs concentriques, repris du motion design (le globe) */
+    repeating-radial-gradient(
+      circle at 112% 50%,
+      transparent 0 116px,
+      rgba(181, 212, 244, 0.14) 116px 117.5px
+    ),
+    /* fond marine qui porte l'ensemble, plus dense en bas */
+    linear-gradient(
+      172deg,
+      rgba(4, 44, 83, 0.80) 0%,
+      rgba(12, 68, 124, 0.83) 42%,
+      rgba(2, 23, 46, 0.94) 100%
+    );
+}
+
+
+
+/* ------------------------------------------------------------------ *
+ *  Décor des cartes de chiffres clés : pétales en filigrane et bulles
+ *
+ *  Tout est très pâle, volontairement : le décor se remarque quand on
+ *  s'arrête dessus, jamais quand on lit le chiffre. Opacités entre 3 et 6 %.
+ * ------------------------------------------------------------------ */
+
+.stat-decor {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/**
+ * Fleur en filigrane, en haut à droite.
+ *
+ * Six pétales obtenus par autant de dégradés radiaux elliptiques tournés
+ * autour d'un même centre : aucune image, aucun SVG à charger.
+ */
+/**
+ * Fleur en filigrane, en haut à droite de la carte.
+ *
+ * Six pétales obtenus par trois dégradés radiaux elliptiques superposés et
+ * pivotés : aucune image, aucun SVG à charger.
+ */
+.stat-petales {
+  position: absolute;
+  top: -42px;
+  right: -38px;
+  width: 190px;
+  height: 190px;
+  opacity: 0.5;
+  --petale: color-mix(in oklab, var(--c-accent) 9%, transparent);
+  background: radial-gradient(
+    ellipse 22px 46px at 50% 30%,
+    var(--petale) 0 62%,
+    transparent 64%
+  );
+}
+
+.stat-petales::before,
+.stat-petales::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+}
+.stat-petales::before {
+  transform: rotate(60deg);
+}
+.stat-petales::after {
+  transform: rotate(120deg);
+}
+
+/* Cœur de la fleur, à peine plus dense. */
+.stat-coeur {
+  position: absolute;
+  top: 46px;
+  right: 50px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--c-accent) 11%, transparent);
+}
+
+/* --- Bulles --- */
+
+.stat-bulle {
+  position: absolute;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--c-accent) 14%, transparent);
+  animation: bulle-monte var(--duree, 18s) ease-in-out var(--retard, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+/**
+ * Dérive lente vers le haut, avec une légère oscillation latérale. La bulle
+ * naît sous la carte et s'efface avant d'en sortir par le haut.
+ */
+@keyframes bulle-monte {
+  0% {
+    transform: translate3d(0, 20px, 0) scale(0.85);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(7px, -46px, 0) scale(1);
+  }
+  82% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(-4px, -104px, 0) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/**
+ * Appareil réglé sur « moins d'animation » : les bulles restent, immobiles et
+ * très discrètes. On garde la texture, on retire le mouvement.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .stat-bulle {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Écran de lancement : l'emblème de l'ISTC et la mention de bas d'écran
+ * ------------------------------------------------------------------ */
+
+/**
+ * L'emblème ouvre la séquence : il se pose avant que le logo de l'application
+ * ne commence à s'assembler, puis s'estompe légèrement pour lui céder la
+ * vedette sans disparaître.
+ */
+.splash-istc {
+  animation:
+    istc-pose 0.85s cubic-bezier(0.22, 1, 0.36, 1) both,
+    istc-recule 0.6s ease-out 1.5s both;
+}
+
+@keyframes istc-pose {
+  from {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.86);
+  }
+}
+
+@keyframes istc-recule {
+  to {
+    opacity: 0.55;
+    transform: scale(0.88);
+  }
+}
+
+/* La mention de l'établissement arrive en dernier, après le slogan. */
+.splash-mention {
+  animation: fade 0.5s ease-out 2.8s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-istc,
+  .splash-mention {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Filigrane de page : l'emblème de l'ISTC en fond
+ *
+ *  Il occupe le bas droit de la zone de contenu, assez grand pour être
+ *  reconnu, et respire lentement du plus clair au plus sombre. Il reste
+ *  derrière tout le contenu et n'intercepte aucun clic.
+ * ------------------------------------------------------------------ */
+
+/**
+ * Filigrane centré dans la zone de contenu.
+ *
+ * `left: 50%` puis `translateX(-50%)` le centrent sur la colonne de contenu,
+ * pas sur la fenêtre : il ne glisse donc pas quand la barre latérale apparaît.
+ * Le décalage horizontal est repris dans chaque étape de l'animation, sinon la
+ * transformation du centrage serait écrasée.
+ */
+.page-filigrane {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: filigrane-respire 7s ease-in-out infinite;
+
+  /**
+   * Le logo fourni est un JPEG sur fond blanc. Le mode de fusion « multiply »
+   * fait disparaître ce blanc dans le fond de la page sans toucher au dessin :
+   * l'emblème reste exactement celui de l'établissement, net, simplement
+   * détouré à l'affichage.
+   */
+  mix-blend-mode: multiply;
+}
+
+/* En thème sombre, on éclaircit au lieu de multiplier, et on inverse le JPEG
+   pour que le dessin reste lisible sur fond foncé. */
+.dark .page-filigrane {
+  mix-blend-mode: screen;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/**
+ * Respiration : l'emblème passe d'une présence franche à une présence feutrée,
+ * avec une très légère dilatation. Le cycle est long (9 s) pour qu'on le
+ * perçoive comme un fond vivant, jamais comme un clignotement.
+ */
+/**
+ * Respiration : l'emblème passe d'une présence franche à presque effacé, puis
+ * revient. Le cycle est long (7 s) pour qu'on le perçoive comme un fond
+ * vivant, jamais comme un clignotement.
+ *
+ * Chaque étape répète translate(-50%, -50%) : sans cela, l'animation
+ * écraserait la transformation qui centre l'emblème.
+ */
+@keyframes filigrane-respire {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.045;
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+}
+
+@keyframes filigrane-respire-sombre {
+  0%,
+  100% {
+    opacity: 0.14;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.03;
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+}
+
+/* En thème sombre, le même emblème a besoin de moins d'opacité pour peser autant. */
+.dark .page-filigrane {
+  animation-name: filigrane-respire-sombre;
+}
+
+/**
+ * Mouvement réduit : l'emblème reste centré et visible, mais immobile. Le
+ * centrage doit être réaffirmé ici, puisqu'on coupe l'animation qui le portait.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .page-filigrane {
+    animation: none;
+    opacity: 0.11;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Sur téléphone, le filigrane reste centré mais s'efface davantage : l'écran
+   est déjà dense, il ne doit pas concurrencer le contenu. */
+@media (max-width: 767px) {
+  .page-filigrane {
+    animation-name: filigrane-respire-mobile;
+  }
+
+  @keyframes filigrane-respire-mobile {
+    0%,
+    100% {
+      opacity: 0.12;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.03;
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Emblème détouré
+ *
+ *  Le logo fourni est un JPEG sur fond blanc. Le mode de fusion « multiply »
+ *  fait disparaître ce blanc dans ce qui se trouve derrière — fond de page
+ *  comme filigrane — sans toucher au dessin lui-même. L'emblème reste celui
+ *  de l'établissement, simplement posé sans vignette.
+ * ------------------------------------------------------------------ */
+
+.logo-detoure {
+  mix-blend-mode: multiply;
+  /* Le JPEG a une marge blanche autour du dessin : on la rogne pour que
+     l'emblème occupe vraiment la place qu'on lui donne. */
+  transform: scale(1.1);
+}
+
+/* En thème sombre, on éclaircit au lieu de multiplier, et on inverse le JPEG
+   pour que le dessin reste lisible sur fond foncé. */
+.dark .logo-detoure {
+  mix-blend-mode: screen;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/**
+ * Filigrane cantonné à sa colonne — écran de connexion sur téléphone.
+ *
+ * Variante de `.page-filigrane` en position absolue plutôt que fixe : il se
+ * centre sur la colonne du formulaire et reste dans son flux, si bien que
+ * l'emblème détouré posé au-dessus peut se fondre avec lui.
+ */
+.filigrane-colonne {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: filigrane-respire 7s ease-in-out infinite;
+}
+
+.dark .filigrane-colonne {
+  animation-name: filigrane-respire-sombre;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filigrane-colonne {
+    animation: none;
+    opacity: 0.11;
+    transform: translate(-50%, -50%);
+  }
+}

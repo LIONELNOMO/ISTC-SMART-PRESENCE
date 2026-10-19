@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <title>ISTC SmartPresence</title>
+  <rect width="160" height="160" rx="34" fill="#042C53"/>
+  <path d="M44.6 99.4 A50 50 0 0 0 51.3 23" fill="none" stroke="#F0892E" stroke-width="3" stroke-linecap="round"/>
+  <path d="M115.4 99.4 A50 50 0 0 1 108.7 23" fill="none" stroke="#F0892E" stroke-width="3" stroke-linecap="round"/>
+  <g fill="#F0892E">
+    <g transform="translate(44.6 99.4) rotate(225)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(33 81.1) rotate(250)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(30.2 59.6) rotate(275)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(36.7 39) rotate(300)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(51.3 23) rotate(325)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(115.4 99.4) rotate(-45)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(127 81.1) rotate(-70)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(129.8 59.6) rotate(-95)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(123.3 39) rotate(-120)"><ellipse rx="5" ry="2.3"/></g>
+    <g transform="translate(108.7 23) rotate(-145)"><ellipse rx="5" ry="2.3"/></g>
+  </g>
+  <path d="M80 104 C68 97 52 96 36 100 L36 118 C52 114 68 115 80 122 Z" fill="#185FA5"/>
+  <path d="M80 104 C92 97 108 96 124 100 L124 118 C108 114 92 115 80 122 Z" fill="#185FA5"/>
+  <circle cx="80" cy="64" r="30" fill="#378ADD"/>
+  <path d="M80 39 C88 38 93 44 91 50 C97 54 99 61 95 68 C93 77 87 84 83 89 C79 83 77 76 73 71 C67 67 67 60 71 56 C69 50 73 43 80 39Z" fill="#0C447C"/>
+  <path d="M55 46 C61 44 62 52 58 58 C62 64 60 72 56 78 C52 72 51 58 55 46Z" fill="#0C447C"/>
+  <ellipse cx="80" cy="64" rx="13" ry="30" fill="none" stroke="#B5D4F4" stroke-width=".7"/>
+  <line x1="50" y1="64" x2="110" y2="64" stroke="#B5D4F4" stroke-width=".7"/>
+  <circle cx="80" cy="64" r="30" fill="none" stroke="#B5D4F4" stroke-width="1.1"/>
+</svg>

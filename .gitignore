@@ -1,0 +1,27 @@
+# Dépendances
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+*.local
+
+# Secrets — §13.11 « Secrets dans le dépôt »
+.env
+.env.*
+!.env.example
+
+# Éditeurs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Journaux
+*.log
+npm-debug.log*
+
+# Secrets de l'API (§13.11)
+api/config.php
+.diag/

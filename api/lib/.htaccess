@@ -1,0 +1,8 @@
+# Ce dossier ne contient que du code appelé par index.php.
+# Aucun de ses fichiers ne doit être accessible par le web (§13.3).
+Require all denied
+
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
